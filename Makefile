@@ -54,7 +54,7 @@ cover: lint test
 
 ## run: Execute the application
 run: $(VENV)/bin/activate
-> @$(PYTHON) app.py
+> @$(PYTHON) main.py
 
 ## clean: Remove all build, test, coverage and Python artefact
 clean:
@@ -62,7 +62,7 @@ clean:
 > @find . -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -rf {} \;
 > @find . -type d -name "__pycache__" -exec rm -rf {} +
 
-## delete: Remove all build, test, coverage and Python artefact
+## delete: Remove python virtual environment
 delete: clean
 > @echo "$(RED)Removing virtual environment...$(NC)"
 > @rm -rf $(VENV)
