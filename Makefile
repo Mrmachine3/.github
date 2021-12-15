@@ -1,51 +1,69 @@
+NC := $(shell tput sgr0)
+GRN := $(shell tput setaf 2)
+RED := $(shell tput setaf 1)
+YLW := $(shell tput setaf 3)
+
+OK=$(GRN)[OK]$(NC)
+ERR=$(RED)[ERROR]$(NC)
+WRN=$(YLW)[WARN]$(NC)
+
 .RECIPEPREFIX = >
+GREEN = '\033[0;32M'
 VENV = venv
 PYTHON = $(VENV)/bin/python3
 PIP = $(VENV)/bin/pip
 
 .DEFAULT_GOAL := help
 
-.PHONY: help test run clean
+.PHONY: help hello lint test cover run clean delete
+
+hello:
+> @echo "$(GRN)Welcome to your new Python virtual environment!$(NC)"
 
 ## help: Show Makefile targets
-help:
+help: 
 > @ echo "Usage: make [target]\n"
 > @ sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
-## setup: Set up project and install requirements
+## install: Install python venv on host
+install: 
+> sudo apt install python3-venv -y
+
+## setup: Set up project and install dependencies
 setup: requirements.txt
-> @echo "Set up project and install requirements"
-#> @pip install -r requirements.txt
+> pip install -r requirements.txt 
 
 $(VENV)/bin/activate: requirements.txt
-> @echo "Activate virtual environment"
-#> $(PYTHON) -m $(VENV) ./venv
-#> $(PIP) install -r requirements.txt
+> @echo "$(GRN)Activating virtual environment...$(NC)"
+> @python3 -m venv $(VENV)
+> @$(PIP) install -r requirements.txt
+> @echo "$(GRN)Project requirements installed...$(NC)"
+> @echo "$(GRN)|======== RUNNING APPLICATION ========|$(NC)\n"
 
-## start: Activate virtual environment
-start: $(VENV)/bin/activate ## Activate virtual environment
-
-## lint: Execute source code linters
+## lint: Execute linters
 lint:
-> @echo "Execute source code linters"
+> @echo "$(GRN)Executing linters...$(NC)"
 
-## test: Execute source code tests
+## test: Execute tests
 test: lint
-> @echo "Execute source code tests"
-
+> @echo "$(GRN)Executing tests...$(NC)"
+                        
 ## cover: Evaluate test coverage metrics for source code
 cover: lint test
-> @echo "Evaluate test coverage metrics for source code"
+> @echo "$(GRN)Evaluating test coverage metrics for source code...$(NC)"
 
 ## run: Execute the application
 run: $(VENV)/bin/activate
-> @echo "Execute the application"
-#> $(PYTHON) app.py
+> @$(PYTHON) app.py
 
 ## clean: Remove all build, test, coverage and Python artefact
 clean:
-> @echo "Remove all build, test, coverage and Python artifacts"
-#> find . -name '*.pyc' -exec rm -f {} +
-#> find . -name '*.pyo' -exec rm -f {} +
-#> find . -name '__pycache__' -exec rm -fr {} +
-#> rm -rf $(VENV)
+> @echo "$(YLW)Removing all unnecessary build, test, coverage and Python artifacts...$(NC)"
+> @find . -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -rf {} \;
+> @find . -type d -name "__pycache__" -exec rm -rf {} +
+
+## delete: Remove all build, test, coverage and Python artefact
+delete: clean
+> @echo "$(RED)Removing virtual environment...$(NC)"
+> @rm -rf $(VENV)
+
