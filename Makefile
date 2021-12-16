@@ -49,10 +49,17 @@ $(VENV)/bin/activate: requirements.txt
 lint:
 > @echo "$(GRN)Executing linters...$(NC)"
 
-## test: Execute tests
+## test: Execute all test cases
 test: lint
-> @echo "$(GRN)Executing tests...$(NC)"
+> @echo "$(GRN)Executing the following tests...$(NC)"
+> @pytest --collect-only
+> @pytest -v
                         
+## test-fails: Execute tests on failed test cases
+test-fails:
+> @echo "$(GRN)Re-executing failed tests...$(NC)"
+> @pytest -v | grep "^.*FAILED\s*.*%\]" | awk '{print $$1;}' | awk -F:: '{print $$2}' | xargs pytest -vk
+
 ## cover: Evaluate test coverage metrics for source code
 cover: lint test
 > @echo "$(GRN)Evaluating test coverage metrics for source code...$(NC)"
@@ -75,13 +82,13 @@ run: $(VENV)/bin/activate cover
 > @$(PYTHON) main.py
 
 ## clean: Remove all build, test, coverage and Python artifact
-clean: stop
+clean: 
 > @echo "$(YLW)Removing all unnecessary build, test, coverage and Python artifacts...$(NC)"
 > @find . -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -rf {} \;
 > @find . -type d -name "__pycache__" -exec rm -rf {} +
 
 ## delete: Remove python virtual environment
-delete: clean
+delete: stop clean
 > @echo "$(RED)Removing virtual environment...$(NC)"
 > @rm -rf $(VENV)
 
