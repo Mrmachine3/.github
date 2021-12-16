@@ -11,16 +11,17 @@
 
 ```
 Usage: make [target]
-    help Show Makefile targets
+    help    Show Makefile targets
     install Install python venv on host
-  # setup Set up project and install dependencies
-    list List project installation dependencies
-    lint Execute linters
-    test Execute tests
-    cover Evaluate test coverage metrics for source code
-    start Activate the virtual environment
-    stop Terminate the virtual environment
-    run Execute the application
-    clean Remove all build, test, coverage and Python artifact
-    delete Remove python virtual environment
+    setup   Set up project and install dependencies
+    list    List project installation dependencies
+    lint    Execute linters
+    test    Execute tests
+    cover   Evaluate test coverage metrics for source code
+    start   Activate the virtual environment
+    stop    Terminate the virtual environment
+    run     Execute the application
+    clean   Remove all build, test, coverage and Python artifact
+    delete  Remove python virtual environment
 ```
+---

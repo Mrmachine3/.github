@@ -30,9 +30,10 @@ help:
 install: 
 > sudo apt install python3-venv -y
 
-### setup: Set up project and install dependencies
-#setup: requirements.txt
-#> pip install -r requirements.txt 
+## setup: Set up project and install dependencies
+setup: requirements.txt
+> pip install virtualenv
+> pip install pytest
 
 ## list: List project installation dependencies
 list: requirements.txt $(VENV)
