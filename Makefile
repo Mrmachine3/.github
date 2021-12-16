@@ -66,15 +66,15 @@ start: $(VENV)/bin/activate
 stop: 
 > @echo "$(CYN)Enter the following: $(NC)"
 > @echo "$(CYN)\t deactivate$(NC)"
+> @deactivate
 
 ## run: Execute the application
-run: $(VENV)/bin/activate
+run: $(VENV)/bin/activate cover
 > @echo "$(GRN)|======== RUNNING APPLICATION ========|$(NC)\n"
 > @$(PYTHON) main.py
 
-## clean: Remove all build, test, coverage and Python artefact
-clean:
-> @deactivate
+## clean: Remove all build, test, coverage and Python artifact
+clean: stop
 > @echo "$(YLW)Removing all unnecessary build, test, coverage and Python artifacts...$(NC)"
 > @find . -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -rf {} \;
 > @find . -type d -name "__pycache__" -exec rm -rf {} +
