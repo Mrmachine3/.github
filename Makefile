@@ -41,7 +41,7 @@ list: requirements.txt $(VENV)
 
 $(VENV)/bin/activate: requirements.txt
 > @echo "$(GRN)Activating virtual environment...$(NC)"
-> @python3 -m venv $(VENV)
+> @test -d $(VENV) || python3 -m venv $(VENV)
 > @$(PIP) install -r requirements.txt
 > @echo "$(GRN)Project requirements installed...$(NC)"
 
