@@ -16,6 +16,7 @@ Usage: make [target]
   install      Install python venv on host
   setup        Set up project and install dependencies
   list         List project installation dependencies
+  todo         Recursively list all TODO items within source code
   lint         Execute linters
   test         Execute all test cases
   test-fails   Execute tests on failed test cases
@@ -26,4 +27,3 @@ Usage: make [target]
   clean        Remove all build, test, coverage and Python artifact
   delete       Remove python virtual environment
 ```
----
