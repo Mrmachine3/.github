@@ -45,6 +45,10 @@ $(VENV)/bin/activate: requirements.txt
 > @$(PIP) install -r requirements.txt
 > @echo "$(GRN)Project requirements installed...$(NC)"
 
+## todo: Recursively list all TODO items within source code
+todo: TODO.md
+> @grep "\# - \[ \] TODO:" -r --exclude=\TODO.md > TODO.md
+
 ## lint: Execute linters
 lint:
 > @echo "$(GRN)Executing linters...$(NC)"
